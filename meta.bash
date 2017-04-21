@@ -3,6 +3,7 @@
 META_START_DELIMITER="${PASSWORD_STORE_META_START_DELIMITER:-⊥}"
 META_END_DELIMITER="${PASSWORD_STORE_META_END_DELIMITER:-⊤}"
 ATTACHMENTS="${PASSWORD_STORE_ATTACHMENTS_DIR:-$PREFIX/.attachments}"
+TOTP_KEY_IDENTIFIER="${PASSWORD_STORE_TOTP_KEY_IDENTIFIER:-otp}"
 
 cmd_meta_usage() {
   cat <<- EOF
@@ -59,6 +60,8 @@ cmd_append() {
       see $tmp_file
       rm $tmp_file
       exit 0
+    elif [[ "$key" == "$TOTP_KEY_IDENTIFIER" ]]; then
+      secret=$(oathtool --base32 --totp "$secret")
     fi
     echo -e "$secret"
   else
