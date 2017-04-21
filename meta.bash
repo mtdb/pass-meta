@@ -51,18 +51,18 @@ cmd_append() {
   fi
   if [ $? -ne 0 ]; then
     die "$secret"
-  elif [[ $clip -eq 0 ]]; then
-    if [[ "$secret" =~ ^\/\/([a-zA-Z0-9]+).gpg$ ]]; then
-      local encrypted_file=$(echo "$ATTACHMENTS/$(echo "$secret" | sed -e "s/\/\///")")
-      tmpdir #Defines $SECURE_TMPDIR
-      local tmp_file="$(mktemp -u "$SECURE_TMPDIR/XXXXXX")-${path//\//-}"
-      $GPG -d -o "$tmp_file" "${GPG_OPTS[@]}" "$encrypted_file" || exit 1
-      see $tmp_file
-      rm $tmp_file
-      exit 0
-    elif [[ "$key" == "$TOTP_KEY_IDENTIFIER" ]]; then
-      secret=$(oathtool --base32 --totp "$secret")
-    fi
+  elif [[ "$secret" =~ ^\/\/([a-zA-Z0-9]+).gpg$ ]]; then
+    local encrypted_file=$(echo "$ATTACHMENTS/$(echo "$secret" | sed -e "s/\/\///")")
+    tmpdir #Defines $SECURE_TMPDIR
+    local tmp_file="$(mktemp -u "$SECURE_TMPDIR/XXXXXX")-${path//\//-}"
+    $GPG -d -o "$tmp_file" "${GPG_OPTS[@]}" "$encrypted_file" || exit 1
+    see $tmp_file
+    rm $tmp_file
+    exit 0
+  elif [[ "$key" == "$TOTP_KEY_IDENTIFIER" ]]; then
+    secret=$(oathtool --base32 --totp "$secret")
+  fi
+  if [[ $clip -eq 0 ]]; then
     echo -e "$secret"
   else
     clip "$secret"
