@@ -4,6 +4,7 @@ META_START_DELIMITER="${PASSWORD_STORE_META_START_DELIMITER:-⊥}"
 META_END_DELIMITER="${PASSWORD_STORE_META_END_DELIMITER:-⊤}"
 ATTACHMENTS="${PASSWORD_STORE_ATTACHMENTS_DIR:-$PREFIX/.attachments}"
 TOTP_KEY_IDENTIFIER="${PASSWORD_STORE_TOTP_KEY_IDENTIFIER:-otp}"
+FALLBACK="${PASSWORD_STORE_META_FALLBACK:-none}" # pass/tail/none
 
 cmd_meta_usage() {
   cat <<- EOF
@@ -16,7 +17,7 @@ EOF
   exit 0
 }
 
-cmd_append() {
+cmd_meta() {
   local opts clip=0
   opts=$($GETOPT -o c -l clip -n "$PROGRAM" -- "$@")
   local err=$?
@@ -36,7 +37,18 @@ cmd_append() {
   if [[ ! -f $passfile ]]; then
     die "Error: $path is not in the password store."
   elif [[ -z $key ]]; then
-    cmd_meta_usage
+    if [[ $FALLBACK == "pass" ]]; then
+      run="$PROGRAM $1"
+      if [[ clip -eq 1 ]]; then
+        run+=" --clip"
+      fi
+      eval $run
+      exit 0
+    elif [[ $FALLBACK == "tail" ]]; then
+      : # no-op
+    else
+      cmd_meta_usage
+    fi
   fi
 
   local secret="$($GPG -d "${GPG_OPTS[@]}" "$passfile")"
@@ -69,4 +81,4 @@ cmd_append() {
   fi
 }
 
-cmd_append "$@"
+cmd_meta "$@"

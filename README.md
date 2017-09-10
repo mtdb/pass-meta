@@ -4,7 +4,7 @@ A [pass](https://www.passwordstore.org/) extension that provides a schema to org
 
 ## Features
 
-  - Add and copy metadata in yaml format 
+  - Add and copy metadata in yaml format
   - Attachments support
   - Basic TOTP support
 
@@ -90,6 +90,15 @@ otp: BASE32SECRET3232
 456123
 ```
 
+## Options
+
+Set these enviroment variables to configure the command behavior
+
+- PASSWORD_STORE_META_START_DELIMITER _(default: ⊥)_
+- PASSWORD_STORE_META_END_DELIMITER _(default: ⊤)_
+- PASSWORD_STORE_ATTACHMENTS_DIR _(default: $PREFIX/.attachments)_
+- PASSWORD_STORE_TOTP_KEY_IDENTIFIER _(default: otp)_
+- PASSWORD_STORE_META_FALLBACK _(default: none)_ valid values: **pass**, **tail** or **none**
 
 ## Installation
 - Enable password-store extensions by setting `PASSWORD_STORE_ENABLE_EXTENSIONS=true`
