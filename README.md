@@ -47,7 +47,7 @@ username: individuo7
 ⊤
 ```
 
-`pass meta Super/Secret username`  (use -c to copy instead show)
+`pass meta Super/Secret username`  _(use -c to copy instead show)_
 
 ```
 individuo7
@@ -66,9 +66,9 @@ secretimage: //sFDuY8jez8H2rful.gpg
 ⊤
 ```
 
-`pass meta Super/Secret secretimage` (this command show the image)
+`pass meta Super/Secret secretimage` _(show the image)_
 
-When you try to show a file this makes following the mailcap rules.
+When you try to show a file this do it following the mailcap rules.
 
 `pass append Super/Secret otp BASE32SECRET3232`
 
@@ -84,7 +84,7 @@ otp: BASE32SECRET3232
 ⊤
 ```
 
-`pass meta Super/Secret otp` (assume base32 standard totp secret)
+`pass meta Super/Secret otp` _(assume base32 standard totp secret)_
 
 ```
 456123
