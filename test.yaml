@@ -1,0 +1,9 @@
+version: "3"
+
+services:
+  pytest:
+    build:
+      context: .
+      dockerfile: ./tests/Dockerfile
+    volumes:
+      - ./tests:/tests

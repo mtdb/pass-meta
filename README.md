@@ -105,3 +105,9 @@ Set these enviroment variables to configure the command behavior
 - Add this repo as a submodule to your password store and create a symlink to append.bash and meta.bash in `~/password-store/.extensions`
 
 Note: make sure the `yaml` and `oathtool` commands are available in your console
+
+
+## Run tests
+
+docker-compose -f test.yml up
+
