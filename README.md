@@ -1,18 +1,25 @@
 # pass-meta
 
-A [pass](https://www.passwordstore.org/) extension that provides a schema to organize the metadata in yaml format, the idea is to have an valid yaml document within a `⊥` and `⊤` delimiters, is not relevant the content out of them, then you can edit the document following the yaml rules inside the delimiters or write without rules outside them.
+A [pass](https://www.passwordstore.org/) extension that provides a schema to organize the metadata in yaml format, the idea is to have a valid yaml document within `⊥` and `⊤` delimiters, it is not relevant the content out of them, then you can edit the document following the yaml rules inside the delimiters or write without rules outside them.
 
 ## Features
 
   - Add and copy metadata in yaml format
-  - Attachments support
+  - File attachment support
   - Basic TOTP support
 
 ## Requerements
 
   - pass 1.7.0 or later for extension support
   - oathtool for TOTP support
-  - yaml binary provided by [mikefarah/yaml](https://github.com/mikefarah/yaml)
+  - yq from https://pypi.org/project/yq/
+
+To install the requirements in Ubuntu based system are:
+
+```
+sudo apt-get install oathtool jq  # jq is a yq requirement 
+sudo pip3 install yq
+```
 
 ## Ussage
 
@@ -31,7 +38,7 @@ Usage:
 `pass Super/Secret`
 
 ```
-SuP3rH4rDPasSw0rD
+S3cr3tP4ssw0rd
 this is a secret note
 ```
 
@@ -40,7 +47,7 @@ this is a secret note
 `pass Super/Secret`
 
 ```
-SuP3rH4rDPasSw0rD
+S3cr3tP4ssw0rd
 this is a secret note
 ⊥
 username: individuo7
@@ -53,12 +60,12 @@ username: individuo7
 individuo7
 ```
 
-`pass append Super/Secret secretimage /a/real/file/patch.png`
+`pass append Super/Secret secretimage /secret/image.png`  _(the command detects if the file exists before executing)_
 
 `pass Super/Secret`
 
 ```
-SuP3rH4rDPasSw0rD
+S3cr3tP4ssw0rd
 this is a secret note
 ⊥
 username: individuo7
@@ -68,14 +75,14 @@ secretimage: //sFDuY8jez8H2rful.gpg
 
 `pass meta Super/Secret secretimage` _(show the image)_
 
-When you try to show a file this do it following the mailcap rules.
+The command shows the file following the mailcap rules.
 
 `pass append Super/Secret otp BASE32SECRET3232`
 
 `pass Super/Secret`
 
 ```
-SuP3rH4rDPasSw0rD
+S3cr3tP4ssw0rd
 this is a secret note
 ⊥
 username: individuo7
@@ -102,12 +109,11 @@ Set these enviroment variables to configure the command behavior
 
 ## Installation
 - Enable password-store extensions by setting `PASSWORD_STORE_ENABLE_EXTENSIONS=true`
-- Add this repo as a submodule to your password store and create a symlink to append.bash and meta.bash in `~/password-store/.extensions`
+- Copy append.bash and meta.bash into `~/password-store/.extensions`
 
-Note: make sure the `yaml` and `oathtool` commands are available in your console
+Note: make sure the `yq` and `oathtool` commands are available in your console
 
 
 ## Run tests
 
 docker-compose -f test.yml up
-

@@ -57,7 +57,7 @@ cmd_meta() {
     meta=$(echo -e "$secret" | tr "\n" "\r" | sed -e "s/.*$META_START_DELIMITER\r\(.*\)$META_END_DELIMITER.*/\1/"  | tr "\r" "\n")
   fi
 
-  secret=$(echo -e "$meta" | yaml r - $key)
+  secret=$(echo -e "$meta" | yq -r .$key)
   if [[ "$secret" == "null" ]]; then
     die "Error: $key is not in the password file."
   fi

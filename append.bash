@@ -53,17 +53,22 @@ cmd_append() {
     meta=$(cat "$tmp_file" | tr "\n" "\r" | sed -e "s/.*$META_START_DELIMITER\r\(.*\)$META_END_DELIMITER.*/\1/"  | tr "\r" "\n")
   fi
 
-  previous_value=$(echo -e "$meta" | yaml r - $key)
+  if [[ ! $meta ]]; then
+    meta="null"
+  fi
+
+  previous_value=$(echo -e "$meta" | yq -r .$key)
+
   if [ $? -ne 0 ]; then
     die "$previous_value"
   elif [[ "$previous_value" != "null" ]]; then
     read -r -p "This key exists in the document, would you replace it? [y/N] " response
     if [[ $response != [yY] ]]; then
-      [[ is_file ]] && rm "$ATTACHMENTS/$file_name.gpg"
+      [[ $is_file ]] && rm "$ATTACHMENTS/$file_name.gpg"
       exit 1
     fi
 
-    if [[ is_file ]]; then
+    if [[ $is_file ]]; then
       local old_path=$(echo "$ATTACHMENTS/$(echo "$previous_value" | sed -e "s/\/\///")")
       rm $old_path
       if [[ -n $INNER_GIT_DIR && ! -e $old_path ]]; then
@@ -72,7 +77,7 @@ cmd_append() {
     fi
   fi
 
-  local new_meta=$(echo -e "$meta" | yaml w - $key $value)
+  local new_meta=$(echo -e "$meta" | yq -y '.'$key'="'$value'"')
 
   echo -e "$secret\n$META_START_DELIMITER\n$new_meta\n$META_END_DELIMITER" > "$tmp_file"
 
