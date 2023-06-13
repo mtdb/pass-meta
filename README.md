@@ -14,11 +14,14 @@ A [pass](https://www.passwordstore.org/) extension that provides a schema to org
   - oathtool for TOTP support
   - yq from https://pypi.org/project/yq/
 
-To install the requirements in Ubuntu based system are:
+To install the requirements in Ubuntu or MacOS systems are:
 
 ```
-sudo apt-get install oathtool jq  # jq is a yq requirement 
-sudo pip3 install yq
+apt install oathtool yq
+```
+
+```
+brew install oath-toolkit yq
 ```
 
 ## Ussage
@@ -42,7 +45,7 @@ S3cr3tP4ssw0rd
 this is a secret note
 ```
 
-`pass append Super/Secret username individuo7`
+`pass append Super/Secret username mtdb`
 
 `pass Super/Secret`
 
@@ -50,14 +53,14 @@ this is a secret note
 S3cr3tP4ssw0rd
 this is a secret note
 ⊥
-username: individuo7
+username: mtdb
 ⊤
 ```
 
 `pass meta Super/Secret username`  _(use -c to copy instead show)_
 
 ```
-individuo7
+mtdb
 ```
 
 `pass append Super/Secret secretimage /secret/image.png`  _(the command detects if the file exists before executing)_
@@ -68,7 +71,7 @@ individuo7
 S3cr3tP4ssw0rd
 this is a secret note
 ⊥
-username: individuo7
+username: mtdb
 secretimage: //sFDuY8jez8H2rful.gpg
 ⊤
 ```
@@ -85,7 +88,7 @@ The command shows the file following the mailcap rules.
 S3cr3tP4ssw0rd
 this is a secret note
 ⊥
-username: individuo7
+username: mtdb
 secretimage: //sFDuY8jez8H2rful.gpg
 otp: BASE32SECRET3232
 ⊤
