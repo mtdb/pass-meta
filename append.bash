@@ -97,7 +97,7 @@ cmd_append() {
   fi
 
   # Create new metadata with the updated key/value pair
-  local new_meta=$(echo -e "$meta" | yq -y '.'$key'="'$value'"')
+  local new_meta=$(echo -e "$meta" | yq '.'$key'="'$value'"')
 
   # Write the updated metadata and the original secret back to the temporary file
   echo -e "$secret\n$META_START_DELIMITER\n$new_meta\n$META_END_DELIMITER" > "$tmp_file"

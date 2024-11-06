@@ -112,7 +112,12 @@ open_file() {
     if [[ "$OS" == "Linux" ]]; then
         xdg-open "$file"
     elif [[ "$OS" == "Darwin" ]]; then
-        open "$file"
+      case "$(file -b --mime-type $file | cut -d'/' -f1)" in
+        image) open -a Preview $file ;;
+        text) open -a TextEdit $file ;;
+        application) open -a Preview $file ;;  # pdf
+        *) echo "Unsupported filetype." ;;
+      esac
     else
         echo "Unsupported OS: $OS"
         exit 1
