@@ -4,15 +4,15 @@ A [pass](https://www.passwordstore.org/) extension that provides a schema to org
 
 ## Features
 
-  - Add and copy metadata in yaml format
-  - File attachment support
-  - Basic TOTP support
+- Add and copy metadata in yaml format
+- File attachment support
+- Basic TOTP support
 
 ## Requerements
 
-  - pass 1.7.0 or later for extension support
-  - oathtool for TOTP support
-  - yq from https://pypi.org/project/yq/
+- pass 1.7.0 or later for extension support
+- oathtool for TOTP support
+- yq from https://pypi.org/project/yq/
 
 To install the requirements in Ubuntu or MacOS systems are:
 
@@ -32,8 +32,7 @@ Usage:
         Add a new key/value pair in the document metadata
     pass meta pass-name key-name [--clip,-c]
         Show existing key and optionally put it on the clipboard.
-        If the key value is a file then it opens following the mailcap rules
-        http://linux.die.net/man/4/mailcap
+        If the key value is a file, it will open using the xdg-open command.
 ```
 
 ## Example
@@ -57,13 +56,13 @@ username: mtdb
 ⊤
 ```
 
-`pass meta Super/Secret username`  _(use -c to copy instead show)_
+`pass meta Super/Secret username` _(use -c to copy instead show)_
 
 ```
 mtdb
 ```
 
-`pass append Super/Secret secretimage /secret/image.png`  _(the command detects if the file exists before executing)_
+`pass append Super/Secret secretimage /secret/image.png` _(the command detects if the file exists before executing)_
 
 `pass Super/Secret`
 
@@ -104,18 +103,17 @@ otp: BASE32SECRET3232
 
 Set these enviroment variables to configure the command behavior
 
-- PASSWORD_STORE_META_START_DELIMITER _(default: ⊥)_
-- PASSWORD_STORE_META_END_DELIMITER _(default: ⊤)_
-- PASSWORD_STORE_ATTACHMENTS_DIR _(default: $PREFIX/.attachments)_
-- PASSWORD_STORE_TOTP_KEY_IDENTIFIER _(default: otp)_
-- PASSWORD_STORE_META_FALLBACK _(default: none)_ valid values: **pass**, **tail** or **none**
+- PASSWORD*STORE_META_START_DELIMITER *(default: ⊥)\_
+- PASSWORD*STORE_META_END_DELIMITER *(default: ⊤)\_
+- PASSWORD*STORE_ATTACHMENTS_DIR *(default: $PREFIX/.attachments)\_
+- PASSWORD*STORE_TOTP_KEY_IDENTIFIER *(default: otp)\_
 
 ## Installation
+
 - Enable password-store extensions by setting `PASSWORD_STORE_ENABLE_EXTENSIONS=true`
 - Copy append.bash and meta.bash into `~/password-store/.extensions`
 
 Note: make sure the `yq` and `oathtool` commands are available in your console
-
 
 ## Run tests
 
